@@ -1,6 +1,6 @@
 resource "azurerm_postgresql_flexible_server" "postgresql_flexible_server" {
   resource_group_name = var.resource_group_name
-  name                = local.postgresql_flexible_server_name
+  name                = var.name
   location            = var.location
 
   sku_name   = join("_", [lookup(local.tier_map, var.tier, "GeneralPurpose"), "Standard", var.size])
@@ -46,7 +46,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql_flexible_server" {
 resource "azurerm_postgresql_flexible_server_database" "postgresql_flexible_db" {
   for_each = toset(var.databases_names)
 
-  name      = var.use_caf_naming_for_databases ? data.azurecaf_name.postgresql_flexible_dbs[each.value].result : each.value
+  name      = each.value
   server_id = azurerm_postgresql_flexible_server.postgresql_flexible_server.id
   charset   = lookup(var.databases_charset, each.value, "UTF8")
   collation = lookup(var.databases_collation, each.value, "en_US.UTF8")

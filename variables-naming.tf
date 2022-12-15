@@ -1,3 +1,8 @@
+variable "name" {
+  description = "(Required) The name which should be used for this PostgreSQL Flexible Server."
+  type        = string
+}
+
 # Generic naming variables
 variable "name_prefix" {
   description = "Optional prefix for the generated name."
@@ -23,6 +28,7 @@ variable "custom_server_name" {
   description = "Custom Server Name identifier."
   default     = ""
 }
+
 
 variable "use_caf_naming_for_databases" {
   description = "Use the Azure CAF naming provider to generate databases name."
